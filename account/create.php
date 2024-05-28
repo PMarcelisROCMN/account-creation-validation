@@ -17,15 +17,6 @@ require_once('../config.php');
 //     exit;
 // }
 
-set_exception_handler(function($exception) {
-    $response = new Response();
-    $response->setSuccess(false);
-    $response->setHttpStatusCode(500);
-    $response->addMessage("Internal server error");
-    $response->send();
-    exit;
-});
-
 // if the request method is not POST, send a response with a 405 status code
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $response = new Response();

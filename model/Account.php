@@ -36,7 +36,7 @@ class Account
         if (
             $id !== null && (!is_numeric($id)
                 || $id <= 0
-                || $id > 9223372036854775807)
+                || $id > PHP_INT_MAX)
             || $this->_id !== null
         ) {
             throw new AccountException('Task ID error');
@@ -89,11 +89,11 @@ class Account
 
     public function setAge($age)
     {
-        $cage = intval($age);
+        $ageType = intval($age);
         // throw new AccountException($cage);
-        if ($cage < 13 || $cage > 120) {
+        if ($ageType < 13 || $ageType > 120) {
             throw new AccountException('Age must be between 13 and 120');
         }
-        $this->_age = $cage;
+        $this->_age = $ageType;
     }
 }

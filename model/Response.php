@@ -1,5 +1,4 @@
 <?php
-
 class Response {
 
     private $_success;
@@ -59,7 +58,25 @@ class Response {
             $this->_responseData['message'] = $this->_message;
             $this->_responseData['data'] = $this->_data;
         }
+        $jsonResponse = json_encode($this->_responseData);
 
-        echo json_encode($this->_responseData);
+         // Check for JSON encoding errors
+         if ($jsonResponse === false) {
+            // Handle JSON encoding error
+            $errorInfo = json_last_error_msg();
+            error_log("JSON encoding error: $errorInfo");
+
+            http_response_code(500);
+            echo json_encode([
+                'statusCode' => 500,
+                'success' => false,
+                'message' => ['Internal server error: JSON encoding failed'],
+                'data' => null
+            ]);
+        } else {
+            echo $jsonResponse;
+        }
     }
 }
+// would call this class APIResponse/JSONResponse instead of Response
+// would also create a new controller specifically for the regular response and view
